@@ -8,8 +8,8 @@ In order to upload images to Imgur you are going to need an Imgur application. U
 Of course, if you have an Imgur application, you can skip this section.
 
 To create an application visit https://imgur.com/register/api_oauth and fill the form. Pay attention to select these options:
- Application Type: Browser
- Access Type: Read & Write
+- Application Type: Browser
+- Access Type: Read & Write
  
 Check your inbox, you will receive an email with your application Consumer Key and Consumer Secret. We are going to need them later on.
 
@@ -89,11 +89,16 @@ links.original = "http://i.imgur.com/xyzzy.jpg"
 
 Do you need to retrieve a previously uploaded image?
 ```ruby
-    image = imgur_session.find('foo')
+    @my_image = imgur_session.find('hash_code')
 ```
-Granted, another Image object.
+Granted, another Image object. It will return nil if it could not find an image matching your hash.
 
-How many images do you have?
+Feel free to use it in your Rails views:
+```ruby
+    <%= image_tag @my_image.links.original %>
+```
+
+How many images do you have at the moment?
 ```ruby
     puts imgur_session.images_count
 ```
@@ -107,5 +112,5 @@ It will return true if succeeded, false otherwise.
 
 
 ## Documentation
-*http://api.imgur.com/resources_auth
+- http://api.imgur.com/resources_auth
 
