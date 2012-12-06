@@ -19,5 +19,7 @@ require 'imgur/session'
 module Imgur
   
   HOST = 'http://api.imgur.com'
+  IMAGE_URL = 'http://i.imgur.com/'
+  IMAGE_EXTENSION = 'jpg' # jpg is the default extension for every Imgur image
   
 end

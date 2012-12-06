@@ -99,6 +99,17 @@ describe Imgur do
       @upload_path, @upload_file = my_sample_image
     end
     
+    it 'should return a download URL' do
+      imgur_hash = 'random_valid_hash'
+      
+      @session.url(:foo).should eq('')
+      @session.url().should eq('')
+      @session.url(imgur_hash).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
+      @session.url(imgur_hash, :random_size).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
+      @session.url(imgur_hash, :small_square).should eq("http://i.imgur.com/#{imgur_hash}s.jpg")
+      @session.url(imgur_hash, :large_thumbnail).should eq("http://i.imgur.com/#{imgur_hash}l.jpg")      
+    end
+
     it 'should return my account information' do
       @session.account.should be_an_instance_of Hash
     end
@@ -141,7 +152,7 @@ describe Imgur do
       
       @session.destroy(@@image_by_file.hash).should be_true #deletes second image
     end
-  
+
   end
 
 end
