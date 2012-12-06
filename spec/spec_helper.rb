@@ -1,17 +1,17 @@
 module EverythingAsExpected
 
-  def read_keys_file
-    unless File.exist? 'keys.json'
-      raise "Please add a keys.json file to the project directory containing your Imgur app_key, app_secret, access_token_key and access_token_secret. See keys.json.example to get started."
+  def read_credentials_file
+    unless File.exist? 'credentials.json'
+      raise "Please add a credentials.json file to the project directory containing your Imgur app_key, app_secret, access_token and access_token_secret. See credentials.json.example to get started."
     end
     
-    keys_file_contents = open('keys.json', "r").read
-    data = JSON.parse(keys_file_contents)
-    unless data.count == 4
-      raise "Your keys.json file does contain all the required information. See keys.json.example for more help."
+    credentials_file_contents = File.open('credentials.json', 'r').read
+    credentials = JSON.parse(credentials_file_contents)
+    if credentials.keys.count != 4 and credentials.keys & [:app_key, :app_secret, :access_token, :access_token_secret] != [:app_key, :app_secret, :access_token, :access_token_secret]
+      raise "Your credentials.json file does contain all the required information. See credentials.json.example for more help."
     end
     
-    data
+    credentials.symbolize_keys
   end
 
   def my_sample_image

@@ -52,7 +52,7 @@ We now need to grant access to our Imgur user to Imgur the application, so we ca
 
 Create a session object to communicate to Imgur.
 ```ruby
-    imgur_session = Imgur::Session.new('Consumer Key','Consumer Secret', 'abc', 'def')
+    imgur_session = Imgur::Session.new(:app_key => 'YOUR_APPLICATION_KEY', :app_secret => 'YOUR_APPLICATION_SECRET', :access_token => 'YOUR_ACCESS_TOKEN', :access_token_secret => 'YOUR_ACCESS_TOKEN_SECRET')
 ```
 
 Your account information:

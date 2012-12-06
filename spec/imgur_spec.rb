@@ -31,16 +31,27 @@ describe Imgur do
   
   describe 'api' do
 
-    it 'should fail to create a session when there are less than 4 arguments provided' do
+    it 'should fail to create a session when the credentials are incorrectly specified' do
       expect { Imgur::Session.new() }.to raise_error
-      expect { Imgur::Session.new(1) }.to raise_error
-      expect { Imgur::Session.new(1,2) }.to raise_error
-      expect { Imgur::Session.new(1,2,3) }.to raise_error
+      expect { Imgur::Session.new({:random_key => nil}) }.to raise_error
+      expect { Imgur::Session.new({:app_key => nil, :random_key => nil}) }.to raise_error
+      expect { Imgur::Session.new({}) }.to raise_error
     end
     
     it 'should create a session when provided 4 arguments' do
-      session = Imgur::Session.new(1,2,3,4)
+      session = Imgur::Session.new({:app_key => 'YOUR_APPLICATION_KEY', :app_secret => 'YOUR_APPLICATION_SECRET', :access_token => 'YOUR_ACCESS_TOKEN', :access_token_secret => 'YOUR_ACCESS_TOKEN_SECRET'})
       session.should be_an_instance_of Imgur::Session
+    end
+
+    it 'should return a download URL' do
+      imgur_hash = 'random_valid_hash'
+      
+      @session.url(:foo).should eq('')
+      @session.url().should eq('')
+      @session.url(imgur_hash).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
+      @session.url(imgur_hash, :random_size).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
+      @session.url(imgur_hash, :small_square).should eq("http://i.imgur.com/#{imgur_hash}s.jpg")
+      @session.url(imgur_hash, :large_thumbnail).should eq("http://i.imgur.com/#{imgur_hash}l.jpg")      
     end
     
   end
@@ -48,8 +59,8 @@ describe Imgur do
   describe 'communication' do
   
     before(:all) do
-      keys = read_keys_file
-      @session = Imgur::Session.new(*keys)
+      credentials = read_credentials_file
+      @session = Imgur::Session.new(credentials)
     end
 
     it 'should parse_message' do
@@ -94,30 +105,19 @@ describe Imgur do
   describe 'image management calls' do
 
     before(:all) do
-      keys = read_keys_file
-      @session = Imgur::Session.new(*keys)
+      credentials = read_credentials_file
+      @session = Imgur::Session.new(credentials)
       @upload_path, @upload_file = my_sample_image
-    end
-    
-    it 'should return a download URL' do
-      imgur_hash = 'random_valid_hash'
-      
-      @session.url(:foo).should eq('')
-      @session.url().should eq('')
-      @session.url(imgur_hash).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
-      @session.url(imgur_hash, :random_size).should eq("http://i.imgur.com/#{imgur_hash}.jpg")
-      @session.url(imgur_hash, :small_square).should eq("http://i.imgur.com/#{imgur_hash}s.jpg")
-      @session.url(imgur_hash, :large_thumbnail).should eq("http://i.imgur.com/#{imgur_hash}l.jpg")      
     end
 
     it 'should return my account information' do
       @session.account.should be_an_instance_of Hash
     end
-    
+
     it 'should return the number of images stored' do
       @session.images_count.should > 0
     end
-    
+
     it 'should upload the image' do
       expect { @session.upload('') }.to raise_error
       expect { @session.upload(:not_the_expected_object) }.to raise_error

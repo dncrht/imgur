@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ['dncrht']
   gem.description   = %q{An interface to the Imgur authenticated API}
   gem.summary       = %q{Imgur authenticated API}
-  gem.homepage      = 'https://github.com/dncrht'
+  gem.homepage      = 'https://github.com/dncrht/imgur'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
