@@ -6,10 +6,11 @@ require 'imgur/version'
 Gem::Specification.new do |gem|
   gem.name          = 'imgur'
   gem.version       = Imgur::VERSION
-  gem.authors       = ['dncrht']
+  gem.authors       = ['Daniel Cruz Horts']
   gem.description   = %q{An interface to the Imgur authenticated API}
   gem.summary       = %q{Imgur authenticated API}
   gem.homepage      = 'https://github.com/dncrht/imgur'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
