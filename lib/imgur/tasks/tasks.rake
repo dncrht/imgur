@@ -1,5 +1,5 @@
 require 'imgur' # We need HOST to be available
-require 'imgur/rake'
+require 'imgur/tasks/rake'
 
 namespace :imgur do
   desc 'Obtain your Imgur tokens'
