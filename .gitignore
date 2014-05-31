@@ -18,3 +18,5 @@ tmp
 credentials.json
 sample.jpg
 .DS_Store
+nbproject/
+*.sublime-project
