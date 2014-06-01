@@ -16,7 +16,9 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  
+
   gem.add_dependency 'oauth', '>= 0.4.5'
   gem.add_dependency 'json', '>= 1.6.4'
+  gem.add_development_dependency 'pry', '>= 0.9.12'
+  gem.add_development_dependency 'pry-byebug', '3.1.0'
 end

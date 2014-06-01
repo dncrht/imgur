@@ -11,9 +11,10 @@ require 'imgur/extensions/string'
 require 'imgur/version'
 require 'imgur/api'
 require 'imgur/communication'
-require 'imgur/image'
-require 'imgur/links'
 require 'imgur/session'
+require 'imgur/models/account'
+require 'imgur/models/image'
+require 'imgur/models/links'
 
 # Gem's container module
 module Imgur

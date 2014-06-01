@@ -5,22 +5,28 @@ module Imgur
     include Communication
 
     # Creates the session instance that handles all the API calls to Imgur
+    # access_token is optional
     def initialize(options)
-      raise ArgumentError if options.keys.sort != [:client_id, :client_secret, :refresh_token]
+      required_arguments = %i(client_id client_secret refresh_token)
+      raise ArgumentError if required_arguments & options.keys != required_arguments
 
       @client_id = options[:client_id]
       @client_secret = options[:client_secret]
-      @access_token = "we don't know yet"
+      @access_token = options[:access_token]
       @refresh_token = options[:refresh_token]
     end
 
     private
 
     def connection
-      @connection ||= Faraday.new(
-        HOST,
-        headers: {'Authorization' => 'Bearer ' << @access_token}
-      )
+      @connection ||=       Faraday.new(
+              HOST,
+              headers: {'Authorization' => 'Bearer ' << @access_token}
+            )#connection_factory
+    end
+
+    def connection_factory
+
     end
 
   end

@@ -38,24 +38,30 @@ And then execute:
 
 We now need to grant access to our Imgur user to Imgur the application, so we can upload images in his behalf. Type this and follow the instructions:
 ```bash
-    $ rake imgur:authorize APP_KEY='Consumer Key' APP_SECRET='Consumer Secret'
+    $ rake imgur:authorize CLIENT_ID='CLIENT_ID' CLIENT_SECRET='CLIENT_SECRET'
     Visit this URL: http://api.imgur.com/oauth/authorize?oauth_token=xxx
     And after you approved the authorization please enter your verification code: yyy
-    
-    Authorization was successful. Here you go:
-    
-    access_token: abc
-    access_token_secret: def
+
+    Authorization was successful. Use these credentials to initialize the library:
+
+    access_token: ACCESS_TOKEN
+    refresh_token: REFRESH_TOKEN
 ```
 
 ## Usage
 
 Create a session object to communicate to Imgur.
 ```ruby
-    imgur_session = Imgur::Session.new(:app_key => 'YOUR_APPLICATION_KEY', :app_secret => 'YOUR_APPLICATION_SECRET', :access_token => 'YOUR_ACCESS_TOKEN', :access_token_secret => 'YOUR_ACCESS_TOKEN_SECRET')
+    imgur_session = Imgur::Session.new(client_id: 'CLIENT_ID', client_secret: 'CLIENT_SECRET', refresh_token: 'REFRESH_TOKEN')
 ```
 
-Your account information:
+Your account:
+```ruby
+    account = imgur_session.account
+    {"id"=>1834609, "url"=>"robotyard", "bio"=>nil, "reputation"=>7, "created"=>1352279501, "pro_expiration"=>false}
+```
+
+How many images you have:
 ```ruby
     puts imgur_session.images_count
 ```
