@@ -1,5 +1,5 @@
 # Gem dependencies
-require 'oauth'
+require 'faraday'
 require 'json'
 
 # Some nice extensions to base classes
@@ -17,9 +17,9 @@ require 'imgur/session'
 
 # Gem's container module
 module Imgur
-  
-  HOST = 'http://api.imgur.com'
+
+  HOST = 'https://api.imgur.com'
   IMAGE_URL = 'http://i.imgur.com/'
   IMAGE_EXTENSION = 'jpg' # jpg is the default extension for every Imgur image
-  
+
 end
