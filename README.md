@@ -10,13 +10,13 @@ Of course, if you have an Imgur application, you can skip this section.
 To create an application visit https://imgur.com/register/api_oauth and fill the form. Pay attention to select these options:
 - Application Type: Browser
 - Access Type: Read & Write
- 
+
 Check your inbox, you will receive an email with your application Consumer Key and Consumer Secret. We are going to need them later on.
 
 ## Installation
 
 Clone this project, build the gem and install it:
- 
+
 ```bash
     $ git clone https://github.com/dncrht/imgur.git
     $ cd imgur
