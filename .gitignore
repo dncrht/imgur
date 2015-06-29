@@ -20,3 +20,4 @@ sample.jpg
 .DS_Store
 nbproject/
 *.sublime-project
+*.orig
