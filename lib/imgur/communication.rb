@@ -8,17 +8,17 @@ module Imgur
 
     # RESTful GET call
     def get(method = '')
-      connection.get("/#{API_VERSION}/account/me/#{method}.json")
+      connection.get("/#{API_VERSION}/#{method}.json")
     end
 
     # RESTful POST call
     def post(method, params)
-      connection.post("/#{API_VERSION}/account/me/#{method}.json", params)
+      connection.post("/#{API_VERSION}/#{method}.json", params)
     end
 
     # RESTful DELETE call
     def delete(method)
-      connection.delete("/#{API_VERSION}/account/me/#{method}.json")
+      connection.delete("/#{API_VERSION}/#{method}.json")
     end
 
     # Processes RESTful response according the status code
@@ -28,6 +28,7 @@ module Imgur
 
         case response.status
         when 200, 404
+          puts response.body
           return parse_message response.body
         when 401, 500
           error_message = parse_message response.body
@@ -37,6 +38,7 @@ module Imgur
 
           request &block # and retry the request
         else
+          puts response.body
           raise "Response code #{response.status} not recognized"
         end
       end
@@ -68,18 +70,5 @@ module Imgur
         raise "Failed trying to parse response: #{e}"
       end
     end
-
-    # Compose an object that represents an image, shifting the links into a Image.links attribute
-    def compose_image(hsh)
-      return nil if !hsh.include? :images or !hsh[:images].include? :image or !hsh[:images].include? :links
-
-      links = Links.new(hsh[:images][:links])
-
-      hsh[:images][:image][:links] = links
-
-      Image.new(hsh[:images][:image])
-    end
-
   end
-
 end

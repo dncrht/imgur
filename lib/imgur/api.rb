@@ -12,43 +12,35 @@ module Imgur
         raise 'Must provide a File or file path'
       end
 
-      hsh = request { post('/images', {:image => Base64.encode64(file.read)}) }
-      hsh = hsh.symbolize_keys_recursively
-
-      compose_image hsh
+      Image.new request { post 'image', image: Base64.encode64(file.read) }['data']
     end
 
     # Queries imgur for an image
     def find(id)
       raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-      hsh = request { get("/images/#{id}") }
-      hsh = hsh.symbolize_keys_recursively
-
-      compose_image hsh
+      Image.new request { get "image/#{id}" }
     end
 
     # Removes an image from imgur
     def destroy(id)
       if id.kind_of? Imgur::Image
-        id = id.hash
+        id = id.id
       end
 
       raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-      hsh = request { delete("/images/#{id}") }
-
-      hsh[hsh.keys.first]['message'] == 'Success' #returns true or false
+      hsh = request { delete "image/#{id}" }['data']
     end
 
     # Return a hash with account info
     def account
-      Account.new request { get }['data']
+      Account.new request { get 'account/me' }['data']
     end
 
     # Number of images stored
     def images_count
-      request { get('images/count') }['data']
+      request { get 'account/me/images/count' }['data']
     end
 
     # Provides the download URL in case you know a valid imgur hash and don't want to make a network trip with .find

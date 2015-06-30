@@ -1,6 +1,7 @@
 # Gem dependencies
 require 'faraday'
 require 'json'
+require 'base64'
 
 # Some nice extensions to base classes
 require 'imgur/extensions/array'
