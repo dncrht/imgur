@@ -33,6 +33,12 @@ module Imgur
       hsh = request { delete "image/#{id}" }['data']
     end
 
+    def images(page = 0)
+      request { get "account/me/images/#{page}" }['data'].map do |image|
+        Image.new image
+      end
+    end
+
     # Return a hash with account info
     def account
       Account.new request { get 'account/me' }['data']

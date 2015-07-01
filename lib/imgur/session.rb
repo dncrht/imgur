@@ -19,16 +19,10 @@ module Imgur
     private
 
     def connection
-      @connection ||=       Faraday.new(
-              HOST,
-              headers: {'Authorization' => 'Bearer ' << @access_token}
-            )#connection_factory
+      @connection ||= Faraday.new(
+        HOST,
+        headers: {'Authorization' => 'Bearer ' << @access_token}
+      )
     end
-
-    def connection_factory
-
-    end
-
   end
-
 end
