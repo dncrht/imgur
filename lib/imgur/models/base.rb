@@ -1,9 +1,5 @@
 module Imgur
-  
-  # Class definition for a link collection
-  class Links
-  
-    # Create links from hash
+  class Base
     def initialize(hsh = {})
       hsh.each do |k, v|
         singleton_class.class_eval do
@@ -13,5 +9,4 @@ module Imgur
       end
     end
   end
-
 end

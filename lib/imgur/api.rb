@@ -48,24 +48,5 @@ module Imgur
     def images_count
       request { get 'account/me/images/count' }['data']
     end
-
-    # Provides the download URL in case you know a valid imgur hash and don't want to make a network trip with .find
-    # Just in case you don't need the full Imgur::Image object
-    def url(id = nil, size = nil)
-      return '' unless id.kind_of? String
-
-      case size
-      when :small_square
-        size = 's'
-      when :large_thumbnail
-        size = 'l'
-      else
-        size = ''
-      end
-
-      "#{IMAGE_URL}#{id}#{size}.#{IMAGE_EXTENSION}"
-    end
-
   end
-
 end
