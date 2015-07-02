@@ -16,10 +16,3 @@ require 'imgur/session'
 require 'imgur/models/base'
 require 'imgur/models/account'
 require 'imgur/models/image'
-
-# Gem's container module
-module Imgur
-
-  HOST = 'https://api.imgur.com'
-
-end

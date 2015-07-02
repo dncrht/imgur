@@ -1,8 +1,8 @@
 module Imgur
-
   class Session
     include API
-    include Communication
+
+    HOST = 'https://api.imgur.com'
 
     # Creates the session instance that handles all the API calls to Imgur
     # access_token is optional
@@ -16,7 +16,20 @@ module Imgur
       @refresh_token = options[:refresh_token]
     end
 
-    private
+    def access_token=(access_token)
+      @access_token = access_token
+
+      # Force new connection headers
+      @connection = nil
+    end
+
+    def params
+      {
+        refresh_token: @refresh_token,
+        client_id:     @client_id,
+        client_secret: @client_secret
+      }
+    end
 
     def connection
       @connection ||= Faraday.new(

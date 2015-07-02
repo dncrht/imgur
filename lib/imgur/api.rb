@@ -1,5 +1,4 @@
 module Imgur
-
   module API
 
     # Uploads a file to imgur and returns an Image
@@ -12,14 +11,14 @@ module Imgur
         raise 'Must provide a File or file path'
       end
 
-      Image.new request { post 'image', image: Base64.encode64(file.read) }['data']
+      Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))['data']
     end
 
     # Queries imgur for an image
     def find(id)
       raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-      Image.new request { get "image/#{id}" }
+      Image.new communication.call(:get, "image/#{id}")
     end
 
     # Removes an image from imgur
@@ -30,23 +29,29 @@ module Imgur
 
       raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-      hsh = request { delete "image/#{id}" }['data']
+      communication.call(:delete, "image/#{id}")['data']
     end
 
     def images(page = 0)
-      request { get "account/me/images/#{page}" }['data'].map do |image|
+      communication.call(:get, "account/me/images/#{page}")['data'].map do |image|
         Image.new image
       end
     end
 
     # Return a hash with account info
     def account
-      Account.new request { get 'account/me' }['data']
+      Account.new communication.call(:get, 'account/me')['data']
     end
 
     # Number of images stored
     def images_count
-      request { get 'account/me/images/count' }['data']
+      communication.call(:get, 'account/me/images/count')['data']
+    end
+
+    private
+
+    def communication
+      Communication.new(self)
     end
   end
 end
