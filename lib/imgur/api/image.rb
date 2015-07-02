@@ -6,7 +6,7 @@ module Imgur
       def image(id)
         raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-        Imgur::Image.new communication.call(:get, "image/#{id}")['data']
+        Imgur::Image.new communication.call(:get, "image/#{id}")
       end
 
       # https://api.imgur.com/endpoints/image#image-upload
@@ -19,7 +19,7 @@ module Imgur
           raise 'Must provide a File or file path'
         end
 
-        Imgur::Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))['data']
+        Imgur::Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))
       end
 
       # https://api.imgur.com/endpoints/image#image-delete
@@ -30,7 +30,7 @@ module Imgur
 
         raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-        communication.call(:delete, "image/#{id}")['data']
+        communication.call(:delete, "image/#{id}")
       end
     end
   end

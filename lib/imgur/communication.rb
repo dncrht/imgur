@@ -19,7 +19,7 @@ module Imgur
 
         case response.status
         when 200, 404
-          return parse_message response.body
+          return parse_message(response.body)['data']
         when 401, 500
           error_message = parse_message response.body
           raise "Unauthorized: #{error_message['error']['message']}"
