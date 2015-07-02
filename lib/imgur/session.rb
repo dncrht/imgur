@@ -14,7 +14,7 @@ module Imgur
       @refresh_token = options[:refresh_token]
     end
 
-    %w(Account).each do |clazz|
+    %w(Account Image).each do |clazz|
       define_method clazz.downcase do
         Imgur::Api.const_get(clazz).new(self)
       end
