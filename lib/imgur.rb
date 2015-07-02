@@ -10,7 +10,8 @@ require 'imgur/extensions/string'
 
 # This gem real code
 require 'imgur/version'
-require 'imgur/api'
+require 'imgur/api/base'
+require 'imgur/api/account'
 require 'imgur/communication'
 require 'imgur/session'
 require 'imgur/models/base'

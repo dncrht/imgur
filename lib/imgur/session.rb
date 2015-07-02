@@ -1,7 +1,5 @@
 module Imgur
   class Session
-    include API
-
     HOST = 'https://api.imgur.com'
 
     # Creates the session instance that handles all the API calls to Imgur
@@ -14,6 +12,12 @@ module Imgur
       @client_secret = options[:client_secret]
       @access_token = options[:access_token]
       @refresh_token = options[:refresh_token]
+    end
+
+    %w(Account).each do |clazz|
+      define_method clazz.downcase do
+        Imgur::Api.const_get(clazz).new(self)
+      end
     end
 
     def access_token=(access_token)

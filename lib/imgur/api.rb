@@ -32,22 +32,6 @@ module Imgur
       communication.call(:delete, "image/#{id}")['data']
     end
 
-    def images(page = 0)
-      communication.call(:get, "account/me/images/#{page}")['data'].map do |image|
-        Image.new image
-      end
-    end
-
-    # Return a hash with account info
-    def account
-      Account.new communication.call(:get, 'account/me')['data']
-    end
-
-    # Number of images stored
-    def images_count
-      communication.call(:get, 'account/me/images/count')['data']
-    end
-
     private
 
     def communication
