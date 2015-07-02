@@ -23,7 +23,7 @@ module Imgur
     def access_token=(access_token)
       @access_token = access_token
 
-      # Force new connection headers
+      # Forces to create a new connection with new header
       @connection = nil
     end
 
