@@ -3,17 +3,19 @@ module Imgur
 
     # Provides the download URL in case you know a valid imgur hash and don't want to make a network trip with .find
     # Just in case you don't need the full Imgur::Image object
-    def url(size = nil)
+    def url(size)
       size = case size
-             when :small_square
+             when :small_square, :small, :s
                's'
-             when :large_thumbnail
+             when :large_thumbnail, :large, :l
                'l'
+             else
+               ''
              end
 
       splitted_link = link.split('.')
-
-      splitted_link.insert(splitted_link.size - 1, size).join
+      splitted_link[splitted_link.size - 2] << size
+      splitted_link.join '.'
     end
   end
 end
