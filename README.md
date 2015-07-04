@@ -95,6 +95,14 @@ Feel free to use it in your Rails views:
 <%= image_tag my_image.link %>
 ```
 
+Alternatively, you can use `url` instead of `link` because it provides image resizing.
+```
+<%= image_tag my_image.url %>
+<%= image_tag my_image.url(:small) %>
+```
+With no arguments, it's the same as `link`.
+Available sizes are small (`:small_square`, `:small` or `:s`) and large (`:large_thumbnail`, `:large` or `:l`)
+
 How many images do you have at the moment?
 ```ruby
 puts imgur_session.account.image_count
