@@ -2,6 +2,7 @@ module Imgur
   Communication = Struct.new(:session) do
 
     API_VERSION = 3
+    MAX_ATTEMPTS = 3
 
     # RESTful network call
     def call(method, endpoint, params = nil)
@@ -13,27 +14,26 @@ module Imgur
     private
 
     # Processes RESTful response according the status code
-    def request(&block)
-      3.times do
-        response = yield
-
-        case response.status
-        when 200, 404
-          return parse_message(response.body)['data']
-        when 401, 500
-          error_message = parse_message response.body
-          raise "Unauthorized: #{error_message['error']['message']}"
-        when 403
-          get_new_and_reset_token
-
-          request &block # and retry the request
-        else
-          puts response.body
-          raise "Response code #{response.status} not recognized"
-        end
+    def request(attempt = 0, &block)
+      if attempt == MAX_ATTEMPTS
+        raise "Retried #{MAX_ATTEMPTS} times but could not get an access_token"
       end
 
-      raise "Retried 3 times but could not get an access_token"
+      response = yield
+
+      case response.status
+      when 200, 404
+        return parse_message(response.body)['data']
+      when 401, 500
+        error_message = parse_message response.body
+        raise "Unauthorized: #{error_message['error']['message']}"
+      when 403
+        get_new_and_reset_token
+
+        request attempt + 1, &block # and retry the request once more
+      else
+        raise "Response code #{response.status} not recognized"
+      end
     end
 
     def get_new_and_reset_token
