@@ -14,6 +14,11 @@ module Imgur
       @refresh_token = options[:refresh_token]
     end
 
+    # Singleton initializer to allow access_token reuse
+    def self.instance(options)
+      @@session ||= new(options)
+    end
+
     %w(Account Image).each do |clazz|
       define_method clazz.downcase do
         Imgur::Api.const_get(clazz).new(self)
