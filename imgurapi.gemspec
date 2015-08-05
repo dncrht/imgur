@@ -1,9 +1,9 @@
 $:.push File.expand_path('../lib', __FILE__)
-require 'imgur/version'
+require 'imgurapi/version'
 
 Gem::Specification.new do |s|
   s.name          = 'imgurapi'
-  s.version       = Imgur::VERSION
+  s.version       = Imgurapi::VERSION
   s.authors       = ['Daniel Cruz Horts']
   s.homepage      = 'https://github.com/dncrht/imgur'
   s.summary       = 'Imgur authenticated API'

@@ -47,13 +47,13 @@ refresh_token: REFRESH_TOKEN
 
 Create a session object to communicate to Imgur.
 ```ruby
-imgur_session = Imgur::Session.new(client_id: 'CLIENT_ID', client_secret: 'CLIENT_SECRET', refresh_token: 'REFRESH_TOKEN')
+imgur_session = Imgurapi::Session.new(client_id: 'CLIENT_ID', client_secret: 'CLIENT_SECRET', refresh_token: 'REFRESH_TOKEN')
 ```
 
 Your account:
 ```ruby
 account = imgur_session.account.account
-=> #<Imgur::Account:0x007fd399b6b678 @id=123, @url="my_account", @bio=nil, @reputation=7, @created=1352279501, @pro_expiration=false>
+=> #<Imgurapi::Account:0x007fd399b6b678 @id=123, @url="my_account", @bio=nil, @reputation=7, @created=1352279501, @pro_expiration=false>
 ```
 
 How many images you have:
@@ -66,7 +66,7 @@ Upload your first image. Argument can be either a String or a File:
 image = imgur_session.image.image.upload('portrait.jpg')
 ```
 
-image is now an instance of Imgur::Image, a convenient way to manage all the attributes of your image (at least more convenient than a multilevel dictionary):
+image is now an instance of Imgurapi::Image, a convenient way to manage all the attributes of your image (at least more convenient than a multilevel dictionary):
 ```ruby
 name = nil
 title = nil

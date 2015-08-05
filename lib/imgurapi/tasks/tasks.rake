@@ -1,4 +1,4 @@
-require 'imgur/tasks/rake'
+require 'imgurapi/tasks/rake'
 
 namespace :imgur do
   desc 'Obtain your Imgur tokens'
@@ -8,6 +8,6 @@ namespace :imgur do
       exit
     end
 
-    Imgur::Rake.authorize(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'])
+    Imgurapi::Rake.authorize(ENV['CLIENT_ID'], ENV['CLIENT_SECRET'])
   end
 end

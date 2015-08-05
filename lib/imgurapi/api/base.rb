@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   module Api
     Base = Struct.new(:session) do
 

@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   module Api
     class Image < Base
 
@@ -6,7 +6,7 @@ module Imgur
       def image(id)
         raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
 
-        Imgur::Image.new communication.call(:get, "image/#{id}")
+        Imgurapi::Image.new communication.call(:get, "image/#{id}")
       end
 
       # https://api.imgur.com/endpoints/image#image-upload
@@ -19,12 +19,12 @@ module Imgur
           raise 'Must provide a File or file path'
         end
 
-        Imgur::Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))
+        Imgurapi::Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))
       end
 
       # https://api.imgur.com/endpoints/image#image-delete
       def image_delete(id)
-        if id.kind_of? Imgur::Image
+        if id.kind_of? Imgurapi::Image
           id = id.id
         end
 

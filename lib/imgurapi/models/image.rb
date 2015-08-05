@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   class Image < Base
 
     IMAGE_URL = 'http://i.imgur.com/'
@@ -9,7 +9,7 @@ module Imgur
     end
 
     # Provides the download URL in case you know a valid imgur hash and don't want to make a network trip with .find
-    # Just in case you don't need the full Imgur::Image object
+    # Just in case you don't need the full Imgurapi::Image object
     def url(size)
       size = case size
              when :small_square, :small, :s

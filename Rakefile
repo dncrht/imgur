@@ -1,7 +1,6 @@
+#!/usr/bin/env rake
 require 'bundler/gem_tasks'
 
-load 'imgur/tasks/tasks.rake'
+Bundler.setup
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new
-task :default => :spec
+load 'imgurapi/tasks/tasks.rake'

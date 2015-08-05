@@ -1,8 +1,8 @@
-module Imgur
+module Imgurapi
   module Tasks
     class Railtie < Rails::Railtie
       rake_tasks do
-        load 'imgur/tasks/tasks.rake'
+        load 'imgurapi/tasks/tasks.rake'
       end
     end
   end

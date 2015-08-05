@@ -1,6 +1,6 @@
-require 'imgur/session'
+require 'imgurapi/session'
 
-module Imgur
+module Imgurapi
 
   module Rake
     extend self
@@ -9,13 +9,13 @@ module Imgur
     TOKEN_ENDPOINT = '/oauth2/token'
 
     def authorize(client_id, client_secret)
-      puts "\nVisit this URL: #{Imgur::Session::HOST}#{AUTHORIZE_ENDPOINT}?client_id=#{client_id}&response_type=pin"
+      puts "\nVisit this URL: #{Imgurapi::Session::HOST}#{AUTHORIZE_ENDPOINT}?client_id=#{client_id}&response_type=pin"
       print 'And after you approved the authorization please enter your verification code: '
 
       pin = STDIN.gets.strip
 
       begin
-        response = Faraday.new(Imgur::Session::HOST).post(TOKEN_ENDPOINT, pin: pin, client_id: client_id, client_secret: client_secret, grant_type: 'pin')
+        response = Faraday.new(Imgurapi::Session::HOST).post(TOKEN_ENDPOINT, pin: pin, client_id: client_id, client_secret: client_secret, grant_type: 'pin')
 
         raise "HTTP #{response.status}" if response.status != 200
         credentials = JSON.parse response.body

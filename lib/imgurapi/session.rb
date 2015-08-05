@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   class Session
     HOST = 'https://api.imgur.com'
 
@@ -21,7 +21,7 @@ module Imgur
 
     %w(Account Image).each do |clazz|
       define_method clazz.downcase do
-        Imgur::Api.const_get(clazz).new(self)
+        Imgurapi::Api.const_get(clazz).new(self)
       end
     end
 

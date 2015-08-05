@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   class Base
     def initialize(hsh = {})
       hsh.each do |k, v|

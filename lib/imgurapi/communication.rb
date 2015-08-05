@@ -1,4 +1,4 @@
-module Imgur
+module Imgurapi
   Communication = Struct.new(:session) do
 
     API_VERSION = 3

@@ -1,28 +1,28 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'imgur'
 
-describe Imgur do
+describe Imgurapi do
 
   describe 'placeholder classes' do
 
     it 'should create an Image with the fields provided' do
-      image = Imgur::Image.new
-      image.should be_an_instance_of Imgur::Image
+      image = Imgurapi::Image.new
+      image.should be_an_instance_of Imgurapi::Image
 
       fields = {:a => 1, :b => 2}
-      image = Imgur::Image.new(fields)
-      image.should be_an_instance_of Imgur::Image
+      image = Imgurapi::Image.new(fields)
+      image.should be_an_instance_of Imgurapi::Image
       image.a.should eq(1)
       image.b.should eq(2)
     end
 
     it 'should create a Link with the fields provided' do
-      links = Imgur::Links.new
-      links.should be_an_instance_of Imgur::Links
+      links = Imgurapi::Links.new
+      links.should be_an_instance_of Imgurapi::Links
 
       fields = {:a => 1, :b => 2}
-      links = Imgur::Links.new(fields)
-      links.should be_an_instance_of Imgur::Links
+      links = Imgurapi::Links.new(fields)
+      links.should be_an_instance_of Imgurapi::Links
       links.a.should eq(1)
       links.b.should eq(2)
     end
@@ -48,7 +48,7 @@ describe Imgur do
 
     before(:all) do
       credentials = read_credentials_file
-      @session = Imgur::Session.new(credentials)
+      @session = Imgurapi::Session.new(credentials)
     end
 
     it 'should parse_message' do
@@ -84,8 +84,8 @@ describe Imgur do
       @session.send(:compose_image, {:images => {}}).should eq(nil)
 
       from_hash = {:images => {:image => {}, :links => {}}}
-      @session.send(:compose_image, from_hash).should be_an_instance_of Imgur::Image
-      @session.send(:compose_image, from_hash).links.should be_an_instance_of Imgur::Links
+      @session.send(:compose_image, from_hash).should be_an_instance_of Imgurapi::Image
+      @session.send(:compose_image, from_hash).links.should be_an_instance_of Imgurapi::Links
     end
 
   end
@@ -94,7 +94,7 @@ describe Imgur do
 
     before(:all) do
       credentials = read_credentials_file
-      @session = Imgur::Session.new(credentials)
+      @session = Imgurapi::Session.new(credentials)
       @upload_path, @upload_file = my_sample_image
     end
 
@@ -111,10 +111,10 @@ describe Imgur do
       expect { @session.upload(:not_the_expected_object) }.to raise_error
 
       @@image_by_path = @session.upload(@upload_path) #FIXME I know this is horrible, but I need to share the same image between tests http://brentlavelle.wordpress.com/2011/04/04/rspec-and-instance-variables/
-      @@image_by_path.should be_an_instance_of Imgur::Image
+      @@image_by_path.should be_an_instance_of Imgurapi::Image
 
       @@image_by_file = @session.upload(@upload_file)
-      @@image_by_file.should be_an_instance_of Imgur::Image
+      @@image_by_file.should be_an_instance_of Imgurapi::Image
     end
 
     it 'should retrieve the image' do
@@ -125,7 +125,7 @@ describe Imgur do
       image.should be_nil
 
       image = @session.find(@@image_by_path.hash)
-      image.should be_an_instance_of Imgur::Image
+      image.should be_an_instance_of Imgurapi::Image
 
       image.hash.should eq(@@image_by_path.hash)
     end
