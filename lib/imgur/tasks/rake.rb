@@ -1,3 +1,5 @@
+require 'imgur/session'
+
 module Imgur
 
   module Rake
@@ -7,17 +9,18 @@ module Imgur
     TOKEN_ENDPOINT = '/oauth2/token'
 
     def authorize(client_id, client_secret)
-      connection = Faraday.new(HOST)
-
-      puts "\nVisit this URL: #{HOST}#{AUTHORIZE_ENDPOINT}?client_id=#{client_id}&response_type=pin"
+      puts "\nVisit this URL: #{Imgur::Session::HOST}#{AUTHORIZE_ENDPOINT}?client_id=#{client_id}&response_type=pin"
       print 'And after you approved the authorization please enter your verification code: '
 
       pin = STDIN.gets.strip
 
       begin
-        response = JSON.parse connection.post(TOKEN_ENDPOINT, pin: pin, client_id: client_id, client_secret: client_secret, grant_type: 'pin').body
-      rescue
-        puts "Authorization failed.\nPlease try again."
+        response = Faraday.new(Imgur::Session::HOST).post(TOKEN_ENDPOINT, pin: pin, client_id: client_id, client_secret: client_secret, grant_type: 'pin')
+
+        raise "HTTP #{response.status}" if response.status != 200
+        credentials = JSON.parse response.body
+      rescue => e
+        puts "Authorization failed: #{e.message}\nPlease try again."
         exit
       end
 
@@ -25,12 +28,10 @@ module Imgur
 
 Authorization was successful. Use these credentials to initialize the library:
 
-access_token: #{response['access_token']}
-refresh_secret: #{response['refresh_token']}
+access_token: #{credentials['access_token']}
+refresh_secret: #{credentials['refresh_token']}
 
-        MESSAGE
+MESSAGE
     end
-
   end
-
 end

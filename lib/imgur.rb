@@ -18,3 +18,6 @@ require 'imgur/session'
 require 'imgur/models/base'
 require 'imgur/models/account'
 require 'imgur/models/image'
+
+# Rails integration
+require 'imgur/tasks/railtie' if defined? Rails

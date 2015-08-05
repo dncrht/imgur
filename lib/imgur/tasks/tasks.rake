@@ -1,4 +1,3 @@
-require 'imgur' # We need HOST to be available
 require 'imgur/tasks/rake'
 
 namespace :imgur do
