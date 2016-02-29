@@ -63,7 +63,7 @@ puts imgur_session.account.image_count
 
 Upload your first image. Argument can be either a String or a File:
 ```ruby
-image = imgur_session.image.image.upload('portrait.jpg')
+image = imgur_session.image.image_upload('portrait.jpg')
 ```
 
 image is now an instance of Imgurapi::Image, a convenient way to manage all the attributes of your image (at least more convenient than a multilevel dictionary):
