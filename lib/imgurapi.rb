@@ -3,11 +3,6 @@ require 'faraday'
 require 'json'
 require 'base64'
 
-# Some nice extensions to base classes
-require 'imgurapi/extensions/array'
-require 'imgurapi/extensions/hash'
-require 'imgurapi/extensions/string'
-
 # This gem real code
 require 'imgurapi/version'
 require 'imgurapi/api/base'
