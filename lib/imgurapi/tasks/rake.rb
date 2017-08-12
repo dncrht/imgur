@@ -1,4 +1,5 @@
 require 'imgurapi/session'
+require 'faraday'
 
 module Imgurapi
 
@@ -26,10 +27,23 @@ module Imgurapi
 
       puts <<-MESSAGE
 
-Authorization was successful. Use these credentials to initialize the library:
+Authorization was successful. These are your credentials to initialize the library:
 
+JSON format, for credentials.json:
+
+{
+"client_id": "#{client_id}",
+"client_secret": "#{client_secret}",
+"access_token": "#{credentials['access_token']}",
+"refresh_token": "#{credentials['refresh_token']}"
+}
+
+YAML format, for imgur.yml:
+
+client_id: #{client_id}
+client_secret: #{client_secret}
 access_token: #{credentials['access_token']}
-refresh_secret: #{credentials['refresh_token']}
+refresh_token: #{credentials['refresh_token']}
 
 MESSAGE
     end

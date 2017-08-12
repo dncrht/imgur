@@ -37,11 +37,10 @@ $ rake imgur:authorize CLIENT_ID='CLIENT_ID' CLIENT_SECRET='CLIENT_SECRET'
 Visit this URL: http://api.imgur.com/oauth/authorize?oauth_token=xxx
 And after you approved the authorization please enter your verification code: yyy
 
-Authorization was successful. Use these credentials to initialize the library:
-
-access_token: ACCESS_TOKEN
-refresh_token: REFRESH_TOKEN
+Authorization was successful. These are your credentials to initialize the library:
 ```
+
+Copy the credentials shown as JSON or YAML, depending how you're going to use this library.
 
 ## Usage and overview
 
@@ -71,7 +70,7 @@ image is now an instance of Imgurapi::Image, a convenient way to manage all the 
 name = nil
 title = nil
 caption = nil
-hash = "xyzzy"
+id = "xyzzy"
 deletehash = "abcdef"
 datetime = "2012-11-18 16:22:00"
 type = "image/jpeg"
@@ -86,9 +85,9 @@ link = "http://imgur.com/xyzzy"
 
 Do you need to retrieve a previously uploaded image?
 ```ruby
-my_image = imgur_session.image.image('hash_code')
+my_image = imgur_session.image.image('id_code')
 ```
-Granted, another Image object. It will return nil if it could not find an image matching your hash.
+Granted, another Image object. It will error if it could not find an image matching the id.
 
 Feel free to use it in your Rails views:
 ```ruby
