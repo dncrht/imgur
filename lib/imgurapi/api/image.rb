@@ -4,14 +4,14 @@ module Imgurapi
 
       # https://api.imgur.com/endpoints/image#image
       def image(id)
-        raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
+        raise 'Please provide a valid image identificator' if id.nil? || !id.is_a?(String) || id == '' || !!(id =~ /[^\w]/)
 
         Imgurapi::Image.new communication.call(:get, "image/#{id}")
       end
 
       # https://api.imgur.com/endpoints/image#image-upload
       def image_upload(local_file)
-        if local_file.kind_of? String
+        if local_file.is_a?(String)
           file = File.open(local_file, 'rb')
         elsif local_file.respond_to? :read
           file = local_file
@@ -28,7 +28,7 @@ module Imgurapi
           id = id.id
         end
 
-        raise 'Please provide a valid image identificator' if id.nil? or !id.kind_of? String or id == '' or !!(id =~ /[^\w]/)
+        raise 'Please provide a valid image identificator' if id.nil? || !id.is_a?(String) || id == '' || !!(id =~ /[^\w]/)
 
         communication.call(:delete, "image/#{id}")
       end
