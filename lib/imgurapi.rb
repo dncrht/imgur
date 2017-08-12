@@ -15,4 +15,4 @@ require 'imgurapi/models/account'
 require 'imgurapi/models/image'
 
 # Rails integration
-require 'imgurapi/tasks/railtie' if defined? Rails
+require 'imgurapi/railtie' if defined? Rails
