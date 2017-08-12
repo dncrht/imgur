@@ -10,7 +10,7 @@ module Imgurapi
 
     # Provides the download URL in case you know a valid imgur hash and don't want to make a network trip with .find
     # Just in case you don't need the full Imgurapi::Image object
-    def url(size)
+    def url(size = nil)
       size = case size
              when :small_square, :small, :s
                's'
