@@ -46,7 +46,7 @@ Copy the credentials shown as JSON or YAML, depending how you're going to use th
 
 Create a session object to communicate to Imgur.
 ```ruby
-imgur_session = Imgurapi::Session.new(client_id: 'CLIENT_ID', client_secret: 'CLIENT_SECRET', refresh_token: 'REFRESH_TOKEN')
+imgur_session = Imgurapi::Session.instance(client_id: 'CLIENT_ID', client_secret: 'CLIENT_SECRET', refresh_token: 'REFRESH_TOKEN')
 ```
 
 Your account:
@@ -115,6 +115,7 @@ imgur_session.image.image_delete('xyzzy')
 It will return true if succeeded, false otherwise.
 
 ## Available endpoints
+
 Not all the endpoints available at https://api.imgur.com/ have been implemented.
 Feel free to suggest or pull request your needs.
 
@@ -129,3 +130,15 @@ Although I consider this is clearer, in the future it may change to follow the n
 | Image | image.image | https://api.imgur.com/endpoints/image#image |
 | Image | image.image_upload | https://api.imgur.com/endpoints/image#image-upload |
 | Image | image.image_delete | https://api.imgur.com/endpoints/image#image-delete |
+
+## Accessing more than one account at once
+
+Imgur's ACCESS_TOKEN expires after 1 month. When you make an API request, if the ACCESS_TOKEN is invalid, the library will attempt to get a new one via the REFRESH_TOKEN. This new ACCESS_TOKEN will live with the instance of the library, if you instantiated the Imgurapi::Session with `.new`. So if you instantiate a new session, the token will be requested again.
+
+Given requesting a new ACCESS_TOKEN on every API call is slow, the recommended way of using Imgurapi::Session is via `.instance`, not `.new` so it requests a fresh ACCESS_TOKEN only once, which will be stored at class level, reducing optimally the number of token requests.
+
+This approach is not feasible if you want to handle several Imgur accounts at once.
+
+In short:
+ - instantiate Imgurapi::Session via `.instance` if you manage 1 account
+ - instantiate Imgurapi::Session via `.new` if you manage 2 or more accounts
