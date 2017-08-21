@@ -5,22 +5,26 @@ describe Imgurapi do
 
   it 'does an integration test by uploading, retrieving and deleting an image' do
     credentials = read_credentials_file
-    @session = Imgurapi::Session.new(credentials)
-    @upload_path, @upload_file = my_sample_image
+    session = Imgurapi::Session.new(credentials)
+    upload_path, upload_file = my_sample_image
 
-    # Upload image
-    image = @session.image.image_upload(@upload_path)
+    # Upload image via path
+    image = session.image.image_upload(upload_path)
+
+    # Upload image via file
+    image2 = session.image.image_upload(upload_file)
 
     # It is there
-    expect(@session.account.image_count).to be > 0
+    expect(session.account.image_count).to be > 0
 
     # Retrieve same image
-    retrieved_image = @session.image.image(image.id)
+    retrieved_image = session.image.image(image.id)
 
     # Same, indeed
     expect(retrieved_image.id).to eq(image.id)
 
-    # Delete image
-    expect(@session.image.image_delete(image)).to eq true
+    # Delete both images
+    expect(session.image.image_delete(image)).to eq true
+    expect(session.image.image_delete(image2)).to eq true
   end
 end
