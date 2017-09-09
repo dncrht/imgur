@@ -24,13 +24,17 @@ module Imgurapi
       case response.status
       when 200, 404
         return parse_message(response.body)['data']
-      when 401, 500
+      when 400
+        raise 'Payload is not an image or recognized by Imgur'
+      when 401
         error_message = parse_message response.body
         raise "Unauthorized: #{error_message['error']['message']}"
       when 403
         get_new_and_reset_token
 
         request attempt + 1, &block # and retry the request once more
+      when 500
+        raise 'Imgur internal error'
       else
         raise "Response code #{response.status} not recognized"
       end
