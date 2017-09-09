@@ -11,6 +11,7 @@ module Imgurapi
 
       # https://api.imgur.com/endpoints/image#image-upload
       def image_upload(local_file)
+        raise 'File must be an image' unless FileType.new(local_file).image?
         if local_file.is_a?(String)
           file = File.open(local_file, 'rb')
         elsif local_file.respond_to? :read
