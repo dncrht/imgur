@@ -6,13 +6,12 @@ describe Imgurapi do
   it 'does an integration test by uploading, retrieving and deleting an image' do
     credentials = read_credentials_file
     session = Imgurapi::Session.new(credentials)
-    upload_path, upload_file = my_sample_image
 
     # Upload image via path
-    image = session.image.image_upload(upload_path)
+    image = session.image.image_upload('sample.jpg')
 
     # Upload image via file
-    image2 = session.image.image_upload(upload_file)
+    image2 = session.image.image_upload(File.open('sample.jpg', 'r'))
 
     # It is there
     expect(session.account.image_count).to be > 0

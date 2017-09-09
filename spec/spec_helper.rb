@@ -17,14 +17,6 @@ module EverythingAsExpected
     end
   end
 
-  def my_sample_image
-    unless File.exist? 'sample.jpg'
-      raise "Please add a sample.jpg file to the project directory to test upload and download. Recommended size: under 30kB"
-    end
-
-    ['sample.jpg', File.open('sample.jpg', 'r')]
-  end
-
 end
 
 RSpec.configure do |config|
