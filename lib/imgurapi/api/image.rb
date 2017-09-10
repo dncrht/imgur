@@ -11,16 +11,19 @@ module Imgurapi
 
       # https://api.imgur.com/endpoints/image#image-upload
       def image_upload(local_file)
-        raise 'File must be an image' unless FileType.new(local_file).image?
-        if local_file.is_a?(String)
-          file = File.open(local_file, 'rb')
-        elsif local_file.respond_to? :read
-          file = local_file
-        else
-          raise 'Must provide a File or file path'
-        end
+        file_type = FileType.new(local_file)
 
-        Imgurapi::Image.new communication.call(:post, 'image', image: Base64.encode64(file.read))
+        image = if file_type.url?
+                  local_file
+                else
+                  raise 'File must be an image' unless file_type.image?
+
+                  file = local_file.respond_to?(:read) ? local_file : File.open(local_file, 'rb')
+
+                  Base64.encode64(file.read)
+                end
+
+        Imgurapi::Image.new communication.call(:post, 'image', image: image)
       end
 
       # https://api.imgur.com/endpoints/image#image-delete

@@ -4,7 +4,6 @@ require 'imgurapi'
 describe Imgurapi::Api::Image do
 
   before :all do
-    credentials = read_credentials_file
     @session = Imgurapi::Session.new(credentials)
   end
 

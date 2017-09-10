@@ -10,7 +10,7 @@ module Imgurapi
       @path = path
     end
 
-    def extension
+    def mime_type
       case IO.read(@path, 10)
       when GIF
         'image/gif'
@@ -24,7 +24,11 @@ module Imgurapi
     end
 
     def image?
-      !!extension
+      !!mime_type
+    end
+
+    def url?
+      !!(@path =~ %r(^(http://|https://|ftp://)))
     end
   end
 end
