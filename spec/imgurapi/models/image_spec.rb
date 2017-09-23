@@ -14,8 +14,10 @@ describe Imgurapi::Image do
     image = Imgurapi::Image.new(id: 'hash')
 
     expect(image.url).to eq "http://i.imgur.com/hash.jpg"
-    expect(image.url(:random_size)).to eq "http://i.imgur.com/hash.jpg"
-    expect(image.url(:small_square)).to eq "http://i.imgur.com/hashs.jpg"
-    expect(image.url(:large_thumbnail)).to eq "http://i.imgur.com/hashl.jpg"
+    expect(image.url(size: :random_size)).to eq "http://i.imgur.com/hash.jpg"
+    expect(image.url(size: :small_square)).to eq "http://i.imgur.com/hashs.jpg"
+    expect(image.url(size: :large_thumbnail, use_ssl: false)).to eq "http://i.imgur.com/hashl.jpg"
+    expect(image.url(use_ssl: true)).to eq "https://i.imgur.com/hash.jpg"
+    expect(image.url(size: :large_thumbnail, use_ssl: true)).to eq "https://i.imgur.com/hashl.jpg"
   end
 end
