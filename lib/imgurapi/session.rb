@@ -6,7 +6,7 @@ module Imgurapi
     # access_token is optional
     def initialize(options)
       required_arguments = %i(client_id client_secret refresh_token)
-      raise ArgumentError if required_arguments & options.keys != required_arguments
+      raise ArgumentError unless required_arguments.all? { |key| options.keys.include? key }
 
       @client_id = options[:client_id]
       @client_secret = options[:client_secret]

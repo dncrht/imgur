@@ -13,7 +13,7 @@ describe Imgurapi::Session do
   context 'correct credentials' do
     it do
       expect(
-        described_class.new(client_id: 'ID', client_secret: 'SECRET', refresh_token: 'TOKEN')
+        described_class.new(client_id: 'ID', refresh_token: 'TOKEN', client_secret: 'SECRET',)
       ).to be_an_instance_of described_class
     end
   end
