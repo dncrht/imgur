@@ -12,6 +12,7 @@ module Imgurapi
       @client_secret = options[:client_secret]
       @access_token = options[:access_token]
       @refresh_token = options[:refresh_token]
+      @use_ssl = !!options[:use_ssl]
     end
 
     # Singleton initializer to allow access_token reuse
@@ -23,6 +24,10 @@ module Imgurapi
       define_method clazz.downcase do
         Imgurapi::Api.const_get(clazz).new(self)
       end
+    end
+
+    def use_ssl?
+      @use_ssl
     end
 
     def access_token=(access_token)
